@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayViewController" customModule="PayView" customModuleProvider="target">
+            <connections>
+                <outlet property="payLabel" destination="5qL-DM-PqV" id="D6Z-KE-mNa"/>
+                <outlet property="tableView" destination="D69-t3-oQN" id="0nd-dB-9Qn"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="402" height="261"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyo-8k-KPt">
+                    <rect key="frame" x="0.0" y="0.0" width="402" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付方式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qL-DM-PqV">
+                            <rect key="frame" x="166" y="15" width="70" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQm-7y-VDU">
+                            <rect key="frame" x="352" y="10" width="30" height="30"/>
+                            <state key="normal" image="pay-down"/>
+                            <connections>
+                                <action selector="dismiss" destination="-1" eventType="touchUpInside" id="vR8-gz-aQQ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.14370152480000001" green="0.4016161681" blue="0.46712404819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="YQm-7y-VDU" secondAttribute="trailing" constant="20" id="49d-5R-kxQ"/>
+                        <constraint firstItem="5qL-DM-PqV" firstAttribute="centerY" secondItem="pyo-8k-KPt" secondAttribute="centerY" id="7kg-Xg-R5g"/>
+                        <constraint firstAttribute="height" constant="50" id="kz2-dp-aKo"/>
+                        <constraint firstItem="YQm-7y-VDU" firstAttribute="centerY" secondItem="pyo-8k-KPt" secondAttribute="centerYWithinMargins" id="oNQ-Iv-7lq"/>
+                        <constraint firstItem="5qL-DM-PqV" firstAttribute="centerX" secondItem="pyo-8k-KPt" secondAttribute="centerX" id="tDM-hW-Dah"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="D69-t3-oQN">
+                    <rect key="frame" x="0.0" y="50" width="402" height="211"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="pyo-8k-KPt" secondAttribute="trailing" id="2Ng-5m-dQe"/>
+                <constraint firstAttribute="trailing" secondItem="D69-t3-oQN" secondAttribute="trailing" id="5f1-wi-Lfq"/>
+                <constraint firstItem="D69-t3-oQN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="A4O-sR-nsm"/>
+                <constraint firstAttribute="bottom" secondItem="D69-t3-oQN" secondAttribute="bottom" id="PXQ-ll-DJI"/>
+                <constraint firstItem="pyo-8k-KPt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YL4-f3-Ju6"/>
+                <constraint firstItem="pyo-8k-KPt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZC9-7M-GFT"/>
+                <constraint firstItem="D69-t3-oQN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kLj-gD-GgR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="47" y="257.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pay-down" width="30" height="30"/>
+    </resources>
+</document>
