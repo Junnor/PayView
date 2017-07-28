@@ -28,20 +28,10 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pA3-3F-45f">
-                        <rect key="frame" x="15" y="60" width="361" height="1"/>
-                        <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="0.35437178940000003" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="0.5" id="r8B-dg-kdi"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="kJA-Zq-Gks" firstAttribute="leading" secondItem="hQj-Ss-gOF" secondAttribute="leadingMargin" constant="20" id="67b-qy-shr"/>
-                    <constraint firstItem="pA3-3F-45f" firstAttribute="leading" secondItem="hQj-Ss-gOF" secondAttribute="leading" constant="15" id="6WW-7D-Y1f"/>
                     <constraint firstItem="LZk-3M-XPU" firstAttribute="leading" secondItem="hQj-Ss-gOF" secondAttribute="leadingMargin" constant="80" id="Grv-hN-zP4"/>
-                    <constraint firstAttribute="bottom" secondItem="pA3-3F-45f" secondAttribute="bottom" id="X5P-31-iU5"/>
-                    <constraint firstAttribute="trailing" secondItem="pA3-3F-45f" secondAttribute="trailing" constant="-34" id="cQp-w0-d2f"/>
                     <constraint firstItem="kJA-Zq-Gks" firstAttribute="centerY" secondItem="hQj-Ss-gOF" secondAttribute="centerY" id="pPF-Wx-6V4"/>
                     <constraint firstItem="LZk-3M-XPU" firstAttribute="centerY" secondItem="kJA-Zq-Gks" secondAttribute="centerY" id="sGU-bE-Mad"/>
                 </constraints>

@@ -101,12 +101,10 @@ class PayViewController: UIViewController {
             tableView.dataSource = self
             tableView.delegate = self
             tableView.rowHeight = rowHeight
-            tableView.separatorStyle = .none
             tableView.register(UINib(nibName: "NormalPayCell", bundle: nil),
                                forCellReuseIdentifier: normalPayIdentifier)
             tableView.register(UINib(nibName: "ApplePayCell", bundle: nil),
                                forCellReuseIdentifier: applePayIdentifier)
-            
         }
     }
     
@@ -208,7 +206,7 @@ class PayViewController: UIViewController {
     }
     
     fileprivate func isQQPayAvailable() -> Bool {   // for qq pay
-        let available = false
+        let available = true
         
         return available
     }
