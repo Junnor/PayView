@@ -14,7 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayViewController" customModule="PayView" customModuleProvider="target">
             <connections>
                 <outlet property="payLabel" destination="5qL-DM-PqV" id="D6Z-KE-mNa"/>
-                <outlet property="tableView" destination="D69-t3-oQN" id="0nd-dB-9Qn"/>
+                <outlet property="tableView" destination="D69-t3-oQN" id="iRB-Mv-QHf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,7 +23,7 @@
             <rect key="frame" x="0.0" y="0.0" width="402" height="261"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyo-8k-KPt">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyo-8k-KPt" userLabel="Header View">
                     <rect key="frame" x="0.0" y="0.0" width="402" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付方式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qL-DM-PqV">
@@ -56,12 +56,12 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="pyo-8k-KPt" secondAttribute="trailing" id="2Ng-5m-dQe"/>
-                <constraint firstAttribute="trailing" secondItem="D69-t3-oQN" secondAttribute="trailing" id="5f1-wi-Lfq"/>
-                <constraint firstItem="D69-t3-oQN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="A4O-sR-nsm"/>
-                <constraint firstAttribute="bottom" secondItem="D69-t3-oQN" secondAttribute="bottom" id="PXQ-ll-DJI"/>
+                <constraint firstItem="D69-t3-oQN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DdX-ab-kwA"/>
                 <constraint firstItem="pyo-8k-KPt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YL4-f3-Ju6"/>
                 <constraint firstItem="pyo-8k-KPt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZC9-7M-GFT"/>
-                <constraint firstItem="D69-t3-oQN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kLj-gD-GgR"/>
+                <constraint firstAttribute="trailing" secondItem="D69-t3-oQN" secondAttribute="trailing" id="dlP-xX-UqQ"/>
+                <constraint firstItem="D69-t3-oQN" firstAttribute="top" secondItem="pyo-8k-KPt" secondAttribute="bottom" id="ps1-Dt-C7j"/>
+                <constraint firstAttribute="bottom" secondItem="D69-t3-oQN" secondAttribute="bottom" id="xZY-su-LY3"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="47" y="257.5"/>

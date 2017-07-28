@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         payViewController.delegate = self
         self.addChildViewController(payViewController)
         let bounds = UIScreen.main.bounds
-        let rect = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 294)
+        let rect = CGRect(x: 0, y: bounds.height, width: bounds.width, height: payViewController.height)
         payViewController.view.frame = rect
         view.addSubview(payViewController.view)
         payViewController.didMove(toParentViewController: self)

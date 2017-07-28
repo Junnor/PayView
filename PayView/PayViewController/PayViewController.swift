@@ -5,6 +5,12 @@
 //  Created by nyato on 2017/7/24.
 //  Copyright © 2017年 nyato. All rights reserved.
 //
+//
+// If add new pay type to PayViewController..
+// -------------------- Step: ------------------
+// 1: add a new PayType case like: case applePay = "Apple Pay"
+// 2: set value for public property height, add rowHeight for the giving pay type (if the pay type is availabel)
+// 3: add the new pay type to private property items (in items initializer method)
 
 import UIKit
 import PassKit
@@ -14,26 +20,7 @@ enum PayType: String {
     case alipay = "支付宝支付"
     case wechatPay = "微信支付"
     case applePay = "Apple Pay"
-    
-    static let expectCount = 4
-    
-    static func pay(atItem item: Int) -> PayType {
-        switch item {
-        case 0: return .miaoPay
-        case 1: return .alipay
-        case 2: return .wechatPay
-        default: return .applePay
-        }
-    }
-    
-    func imageForPay(_ type: PayType) -> UIImage {
-        switch self {
-        case .alipay: return #imageLiteral(resourceName: "pay-alipay")
-        case .applePay: return #imageLiteral(resourceName: "pay-apple")
-        case .wechatPay: return #imageLiteral(resourceName: "pay-wenxin")
-        case .miaoPay: return #imageLiteral(resourceName: "pay-mcion")
-        }
-    }
+    case qqPay = "QQ 支付"
 }
 
 protocol PayViewControllerDelegate: class {
@@ -44,10 +31,30 @@ protocol PayViewControllerDelegate: class {
 
 class PayViewController: UIViewController {
     
-    
     // MARK: - Public. for parent view controller
     
     weak var delegate: PayViewControllerDelegate?
+    
+    var height: CGFloat {
+        // 高度设置不能直接使用 items.count * rowHeight, 
+        // 因为此时 items.count = 0。 不能直接属性间的引用，除非被引用的属性是 let
+        let promptHeight: CGFloat = 50
+        var tableViewHeight = 2 * rowHeight   // miaoPay, alipay
+        
+        if isWechatPayAvailable() {
+            tableViewHeight += rowHeight
+        }
+        
+        if isApplePayAvailable() {
+            tableViewHeight += rowHeight
+        }
+        
+        if isQQPayAvailable() {
+            tableViewHeight += rowHeight
+        }
+        
+        return promptHeight + tableViewHeight
+    }
     
     @objc func showPayView() {
         self.shareShadowView.isHidden = false
@@ -62,6 +69,8 @@ class PayViewController: UIViewController {
     
     // MARK: - Private
     
+    private let rowHeight: CGFloat = 61
+
     @objc private func dismissPayView() {
         self.shareShadowView.isHidden = true
         UIView.animate(withDuration: 0.2) {
@@ -73,13 +82,7 @@ class PayViewController: UIViewController {
         }, completion: nil)
         
     }
-
-    private var height: CGFloat {
-        let promptHeight: CGFloat = 50
-        let tableViewHeight: CGFloat = isApplePayAvailable() ? 4 * 61 : 3 * 61
-        return promptHeight + tableViewHeight
-    }
-
+    
     lazy private var shareShadowView: UIView = {
         let shadowView = UIView()
         shadowView.frame = UIScreen.main.bounds
@@ -96,20 +99,28 @@ class PayViewController: UIViewController {
         didSet {
             tableView.dataSource = self
             tableView.delegate = self
-            tableView.rowHeight = 61
+            tableView.rowHeight = rowHeight
             tableView.separatorStyle = .none
             tableView.register(UINib(nibName: "NormalPayCell", bundle: nil),
-                               forCellReuseIdentifier: normalIdentifier)
+                               forCellReuseIdentifier: normalPayIdentifier)
             tableView.register(UINib(nibName: "ApplePayCell", bundle: nil),
-                               forCellReuseIdentifier: appleIdentifier)
-
+                               forCellReuseIdentifier: applePayIdentifier)
+            
         }
     }
     
     
-    fileprivate let normalIdentifier = "normal pay"
-    fileprivate let appleIdentifier = "apple pay"
+    fileprivate let normalPayIdentifier = "normal pay"
+    fileprivate let applePayIdentifier = "apple pay"
     
+    
+    // MARK: - View controller lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        initializerItems()
+    }
+
     private var addedToSuperView = false
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -122,45 +133,104 @@ class PayViewController: UIViewController {
         }
     }
     
+    // MARK: Helper method
+    
     @IBAction private func dismiss() {
         dismissPayView()
     }
     
     fileprivate var addedPayButton = false
     fileprivate var payNetworks = [PKPaymentNetwork]()
+    
+    fileprivate var items: [(index: Int, image: UIImage, payType: PayType)] = []
+    private func initializerItems() {
+        
+        let miaoPay = (index: 0, image: #imageLiteral(resourceName: "pay-mcion"), payType: PayType.miaoPay)
+        let alipay = (index: 1, image: #imageLiteral(resourceName: "pay-alipay"), payType: PayType.alipay)
+        
+        items.append(miaoPay)
+        items.append(alipay)
+
+        var next = 2
+        
+        var wechatPay: (index: Int, image: UIImage, payType: PayType)
+        var applePay: (index: Int, image: UIImage, payType: PayType)
+        var qqPay: (index: Int, image: UIImage, payType: PayType)
+
+        if isWechatPayAvailable() {
+            wechatPay = (index: next, image: #imageLiteral(resourceName: "pay-wenxin"), payType: PayType.wechatPay)
+            next += 1
+            items.append(wechatPay)
+            
+            if isApplePayAvailable() {
+                applePay = (index: next, image: #imageLiteral(resourceName: "pay-apple"), payType: PayType.applePay)
+                next += 1
+                items.append(applePay)
+            }
+        }
+        
+        if !isWechatPayAvailable() && isApplePayAvailable() {
+            applePay = (index: next, image: #imageLiteral(resourceName: "pay-apple"), payType: PayType.applePay)
+            next += 1
+            items.append(applePay)
+        }
+        
+        // MARK: - test data for qq pay  .. test qq image
+        if isQQPayAvailable() {
+            qqPay = (index: next, image: #imageLiteral(resourceName: "pay-wenxin"), payType: PayType.qqPay)
+            items.append(qqPay)
+            next += 1
+        }
+    }
+    
+    // MARK: - Helper. type available check
+    fileprivate func isApplePayAvailable() -> Bool {  // for apple pay
+        var available = false
+        
+        // 需要银联
+        if #available(iOS 9.2, *) {
+            if PKPaymentAuthorizationViewController.canMakePayments() {
+                payNetworks = [.chinaUnionPay]
+                available = true
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        return available
+    }
+    
+    fileprivate func isWechatPayAvailable() -> Bool {   // for wechat pay
+        let available = true
+        
+        return available
+    }
+    
+    fileprivate func isQQPayAvailable() -> Bool {   // for qq pay
+        let available = false
+        
+        return available
+    }
+
 }
 
 extension PayViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isApplePayAvailable() ? PayType.expectCount : PayType.expectCount - 1
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cellId = normalIdentifier
-        
-        if isApplePayAvailable() && (indexPath.row == (PayType.expectCount - 1)) {
-            cellId = appleIdentifier
-        }
+        let item = items[indexPath.row]
+
+        let cellId = item.payType == .applePay ? applePayIdentifier : normalPayIdentifier
         
         let cell = tableView.dequeueReusableCell(withIdentifier:cellId, for: indexPath)
         cell.selectionStyle = .none
+        
         if let cell = cell as? NormalPayCell {
-            var image: UIImage
-            var text: String
-            if indexPath.row == 0 {
-                image = PayType.miaoPay.imageForPay(.miaoPay)
-                text = PayType.miaoPay.rawValue
-            } else if indexPath.row == 1 {
-                image = PayType.alipay.imageForPay(.alipay)
-                text = PayType.alipay.rawValue
-            } else {
-                image = PayType.wechatPay.imageForPay(.wechatPay)
-                text = PayType.wechatPay.rawValue
-            }
-            
-            cell.payImageView?.image = image
-            cell.titleLabel?.text = text
+            cell.payImageView?.image = item.image
+            cell.titleLabel?.text = item.payType.rawValue
         } else if let cell = cell as? ApplePayCell {
             if #available(iOS 8.3, *) {
                 if !addedPayButton {
@@ -177,27 +247,9 @@ extension PayViewController: UITableViewDataSource {
                 // Fallback on earlier versions
             }
             
-            cell.titleLabel.text = PayType.applePay.rawValue
+            cell.titleLabel.text = item.payType.rawValue
         }
         return cell
-    }
-    
-    // MARK: - Helper
-    
-    fileprivate func isApplePayAvailable() -> Bool {
-        var available = false
-        
-        // 需要银联
-        if #available(iOS 9.2, *) {
-            if PKPaymentAuthorizationViewController.canMakePayments() {
-                payNetworks = [.chinaUnionPay]
-                available = true
-            }
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        return available
     }
 }
 
@@ -205,7 +257,8 @@ extension PayViewController: UITableViewDataSource {
 extension PayViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.payViewController(self, didSelectRowAt: PayType.pay(atItem: indexPath.item))
+        let item = items[indexPath.row]
+        delegate?.payViewController(self, didSelectRowAt: item.payType)
     }
 }
 
