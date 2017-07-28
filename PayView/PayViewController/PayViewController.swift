@@ -38,6 +38,7 @@ class PayViewController: UIViewController {
     var height: CGFloat {
         // 高度设置不能直接使用 items.count * rowHeight, 
         // 因为此时 items.count = 0。 不能直接属性间的引用，除非被引用的属性是 let
+        // https://stackoverflow.com/questions/7712325/cellforrowatindexpath-not-called
         let promptHeight: CGFloat = 50
         var tableViewHeight = 2 * rowHeight   // miaoPay, alipay
         
