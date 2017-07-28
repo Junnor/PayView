@@ -112,7 +112,6 @@ class PayViewController: UIViewController {
     fileprivate let normalPayIdentifier = "normal pay"
     fileprivate let applePayIdentifier = "apple pay"
     
-    
     // MARK: - View controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -256,8 +255,7 @@ extension PayViewController: UITableViewDataSource {
 extension PayViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = items[indexPath.row]
-        delegate?.payViewController(self, didSelectRowAt: item.payType)
+        delegate?.payViewController(self, didSelectRowAt:  items[indexPath.row].payType)
     }
 }
 
